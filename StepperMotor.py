@@ -60,8 +60,6 @@ class StepperMotor:
             elif(self.currentStep == self.advancedSequence[3]):
                 self.currentStep = self.advancedSequence[0]
 
-            print('Current Step = ')
-            print(self.currentStep)
             GPIO.output(self.motorPins[0],self.currentStep[0])                
             GPIO.output(self.motorPins[1],self.currentStep[1])
             GPIO.output(self.motorPins[2],self.currentStep[2])
@@ -100,7 +98,7 @@ class StepperMotor:
         else:
             self.rotateNextBackward()
 
-        print('Step = %d'%(self.steps))
+
 
         
         

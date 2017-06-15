@@ -24,32 +24,37 @@ options = { 0: [1,0,1,0],
             3: [1,0,0,1] }
 
 while 1:
-##    print currentStep
-    if(time.time() - t0 >= 0.000857):
-        if step == 0:
-            GPIO.output(motorPins[0],1)                
-            GPIO.output(motorPins[1],0)
-            GPIO.output(motorPins[2],1)
-            GPIO.output(motorPins[3],0)
-        elif step == 1:
-            GPIO.output(motorPins[0],0)                
-            GPIO.output(motorPins[1],1)
-            GPIO.output(motorPins[2],1)
-            GPIO.output(motorPins[3],0)
-        elif step == 2:
-            GPIO.output(motorPins[0],0)                
-            GPIO.output(motorPins[1],1)
-            GPIO.output(motorPins[2],0)
-            GPIO.output(motorPins[3],1)
-        elif step == 3:
-            GPIO.output(motorPins[0],1)                
-            GPIO.output(motorPins[1],0)
-            GPIO.output(motorPins[2],0)
-            GPIO.output(motorPins[3],1)
-            
-        t0 = time.time()
-        step += 1
-        step = step%4
+####    print currentStep
+##    if(time.time() - t0 >= 0.000857):
+##        if step == 0:
+##            GPIO.output(motorPins[0],1)                
+##            GPIO.output(motorPins[1],0)
+##            GPIO.output(motorPins[2],1)
+##            GPIO.output(motorPins[3],0)
+##        elif step == 1:
+##            GPIO.output(motorPins[0],0)                
+##            GPIO.output(motorPins[1],1)
+##            GPIO.output(motorPins[2],1)
+##            GPIO.output(motorPins[3],0)
+##        elif step == 2:
+##            GPIO.output(motorPins[0],0)                
+##            GPIO.output(motorPins[1],1)
+##            GPIO.output(motorPins[2],0)
+##            GPIO.output(motorPins[3],1)
+##        elif step == 3:
+##            GPIO.output(motorPins[0],1)                
+##            GPIO.output(motorPins[1],0)
+##            GPIO.output(motorPins[2],0)
+##            GPIO.output(motorPins[3],1)
+##            
+##        t0 = time.time()
+##        step += 1
+##        step = step%4
+##
+##    time.sleep(1)
+
+    GPIO.output(5,1)
+    GPIO.output(7,1)
 
 
     
