@@ -129,8 +129,8 @@ def calculateX():
 
 def calculateY():
     global PIDy
-    if abs(y - 100) > 2:
-        yCompensator(100 - y)
+    if abs(100-y) > 2:
+        yCompensator(100-y)
     else:
         PIDy = 0
 

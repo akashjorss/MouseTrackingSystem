@@ -4,59 +4,30 @@ import time
 
 GPIO.setmode(GPIO.BOARD)
 
-motorPins = [5,7,8,10]
+motorPins = [35,37,38,40]
 
 for pin in motorPins:
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,False)
+    print('pin %d initialised!'%(pin))
 
-step = 0
-advancedSequence = [[1,0,1,0],
-                    [0,1,1,0],
-                    [0,1,0,1],
-                    [1,0,0,1]]
-currentStep = advancedSequence[0]
-t0 = time.time()
+stepper = StepperMotor(motorPins)
 
-options = { 0: [1,0,1,0],
-            1: [0,1,1,0],
-            2: [0,1,0,1],
-            3: [1,0,0,1] }
+stepper.setSteps(100000)
+print('steps initialised')
 
-while 1:
-####    print currentStep
-##    if(time.time() - t0 >= 0.000857):
-##        if step == 0:
-##            GPIO.output(motorPins[0],1)                
-##            GPIO.output(motorPins[1],0)
-##            GPIO.output(motorPins[2],1)
-##            GPIO.output(motorPins[3],0)
-##        elif step == 1:
-##            GPIO.output(motorPins[0],0)                
-##            GPIO.output(motorPins[1],1)
-##            GPIO.output(motorPins[2],1)
-##            GPIO.output(motorPins[3],0)
-##        elif step == 2:
-##            GPIO.output(motorPins[0],0)                
-##            GPIO.output(motorPins[1],1)
-##            GPIO.output(motorPins[2],0)
-##            GPIO.output(motorPins[3],1)
-##        elif step == 3:
-##            GPIO.output(motorPins[0],1)                
-##            GPIO.output(motorPins[1],0)
-##            GPIO.output(motorPins[2],0)
-##            GPIO.output(motorPins[3],1)
-##            
-##        t0 = time.time()
-##        step += 1
-##        step = step%4
-##
-##    time.sleep(1)
+current_time = time.time()
+'Stepper Rotating...'
+while(abs(stepper.steps) > 0):
+    if(time.time() - current_time >= stepper.delay):
+        stepper.rotate()
+        current_time = time.time()
 
-    GPIO.output(5,1)
-    GPIO.output(7,1)
+
+print('Rotation finished')
 
 
     
-
     
+
+

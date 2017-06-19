@@ -12,7 +12,7 @@ class StepperMotor:
     motorPins = [0, 0, 0, 0]
     currentStep = [0, 0, 0, 0]
     steps = 0 #Steps to be rotated
-    delay = 0.000857 #delay between magnets polarising
+    delay = 0.001 #delay between magnets polarising
     advancedSequence = [[1,0,1,0],
                        [0,1,1,0],
                        [0,1,0,1],
@@ -24,17 +24,14 @@ class StepperMotor:
         print('Stepper Motor Initialised!')
 
     def __init__(self,motorPins):
-        print('Stepper Motor Intitialised!')
+        print('Stepper Motor Intitialised with Motor Pins!')
         self.motorPins = motorPins
         self.currentStep = self.advancedSequence[0]
         return
 
     def setMotorPins(self, motorPins):
         self.motorPins = motorPins
-        GPIO.output(self.motorPins[0],1)                
-        GPIO.output(self.motorPins[1],0)
-        GPIO.output(self.motorPins[2],1)
-        GPIO.output(self.motorPins[3],0)
+        self.currentStep = self.advancedSequence[0]
         return
 
     def setSteps(self, steps):
@@ -50,6 +47,7 @@ class StepperMotor:
         reversedSequence.reverse()
 
     def rotateNextForward(self):
+##        print('Forward Step')
         if(self.steps > 0):
             if(self.currentStep == self.advancedSequence[0]):
                 self.currentStep = self.advancedSequence[1]
@@ -60,7 +58,7 @@ class StepperMotor:
             elif(self.currentStep == self.advancedSequence[3]):
                 self.currentStep = self.advancedSequence[0]
 
-            GPIO.output(self.motorPins[0],self.currentStep[0])                
+            GPIO.output(self.motorPins[0],self.currentStep[0])
             GPIO.output(self.motorPins[1],self.currentStep[1])
             GPIO.output(self.motorPins[2],self.currentStep[2])
             GPIO.output(self.motorPins[3],self.currentStep[3])
@@ -71,6 +69,7 @@ class StepperMotor:
             
 
     def rotateNextBackward(self):
+##        print('Backward Step')
         if(self.steps < 0):
             if(self.currentStep == self.reversedSequence[0]):
                 self.currentStep = self.reversedSequence[1]
