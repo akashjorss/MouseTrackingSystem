@@ -10,11 +10,15 @@ import atexit
 
 GPIO.setmode(GPIO.BOARD)
 
-CW_Pin = 37
-CP_Pin = 35
+dirx = 37
+pwmx = 35
+diry = 38
+pwmy = 40
 
-GPIO.setup(CW_Pin, GPIO.OUT)
-GPIO.setup(CP_Pin, GPIO.OUT)
+GPIO.setup(dirx, GPIO.OUT)
+GPIO.setup(pwmx, GPIO.OUT)
+GPIO.setup(diry, GPIO.OUT)
+GPIO.setup(pwmy, GPIO.OUT)
 
 
 
@@ -34,7 +38,8 @@ Kd = 0
 print "Kp = %d, Ki = %d, Kd = %d"%(Kp, Ki, Kd)
 
 #Define x and y Motors
-xMotor = CW230(CW_Pin, CP_Pin)
+xMotor = CW230(dirx,pwmx)
+yMotor = CW230(diry,pwmy)
 
 #Initialise PID variables
 ##Px = 0
@@ -163,13 +168,16 @@ while 1:
          calculateX()
          calculateY()
          xMotor.setSteps(PIDx)
-
+         yMotor.setSteps(PIDy)
          tPID = time.time()
 
      if(time.time() - tX >= xMotor.delay):
          xMotor.toggle()
          tX = time.time()
 
+     if(time.time() - tY >= yMotor.delay):
+         yMotor.toggle()
+         tY = time.time()
  
          
 
