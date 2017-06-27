@@ -33,7 +33,6 @@ y = 100
 #define PID values
 Kp = 1
 Ki = 0
-##0.038576
 Kd = 0
 print "Kp = %d, Ki = %d, Kd = %d"%(Kp, Ki, Kd)
 
@@ -42,13 +41,7 @@ xMotor = CW230(dirx,pwmx)
 yMotor = CW230(diry,pwmy)
 
 #Initialise PID variables
-##Px = 0
-##Ix = 0
-##Dx = 0
 previousErrorX = [0,0]
-##Py = 0
-##Iy = 0
-##Dy = 0
 previousErrorY = [0,0]
 Ts = 0.05 #sampling time
 
@@ -79,15 +72,7 @@ def xCompensator(xError):
 
 
     
-##        global Px, Ix, Dx, previousErrorX
-##	Px = Kp*xError
-##	Ix = Ix + xError*Ki
-##	Dx = (xError - previousErrorX)*Kd
-##        print "Ix = %f, Dx = %f"%(Ix, Dx)
-##        print "Kp = %f, Ki = %f, Kd = %f"%(Kp, Ki, Kd)
-##        previousErrorX = xError
-##	return (Px + Ix + Dx)
-    
+  
 
 def yCompensator(yError):
     global PIDy, previousPIDy
@@ -103,16 +88,6 @@ def yCompensator(yError):
     return
 
 
-##        global Py, Iy, Dy, previousErrorY
-##	Py = Kp*yError
-##	Iy = Iy + yError*Ki
-##	Dy = (yError - previousErrorY)*Kd
-##	print "Py = %f, Iy = %f, Dy = %f"%(Py, Iy, Dy)
-##	print "Kp = %f, Ki = %f, Kd = %f"%(Kp, Ki, Kd)
-##        previousErrorY = yError
-##	return (Py + Iy + Dy)
-
-#define functions for x, y motor control and pixy for multithreading
 
 def calculateX():
     global PIDx
@@ -120,15 +95,13 @@ def calculateX():
         xCompensator(160-x)
     else:
         PIDx = 0
-
-##    PIDx = xCompensator(x - 160)
-        
+    
     return
 
 def calculateY():
     global PIDy
-    if abs(100-y) > 2:
-        yCompensator(100-y)
+    if abs(y-100) > 2:
+        yCompensator(y-100)
     else:
         PIDy = 0
 
@@ -144,10 +117,14 @@ blocks = get_blocks.BlockArray(100)
 def pixy():
     global x, y
     count = get_blocks.pixy_get_blocks(100, blocks)
-    if count > 0:
+    if count > 1:
         print 'OUTPUT: [X=%3d Y=%3d]' % (blocks[0].x, blocks[0].y)
-        x = blocks[0].x
-        y = blocks[0].y
+        x1 = blocks[0].x
+        y1 = blocks[0].y
+        x2 = blocks[1].x
+        y2 = blocks[1].y
+        x = (x1+x2)/2
+        y = (y1+y2)/2
     else:
        x = 160
        y = 100

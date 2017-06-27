@@ -1,33 +1,30 @@
-import RPi.GPIO as GPIO
-from StepperMotor import StepperMotor
-import time
+from Tkinter import *
 
-GPIO.setmode(GPIO.BOARD)
+def show_entry_fields():
+   print("First Name: %s\nLast Name: %s" % (e1.get(), e2.get()))
 
-motorPins = [35,37,38,40]
+master = Tk()
 
-for pin in motorPins:
-    GPIO.setup(pin,GPIO.OUT)
-    GPIO.output(pin,False)
-    print('pin %d initialised!'%(pin))
-
-stepper = StepperMotor(motorPins)
-
-stepper.setSteps(100000)
-print('steps initialised')
-
-current_time = time.time()
-'Stepper Rotating...'
-while(abs(stepper.steps) > 0):
-    if(time.time() - current_time >= stepper.delay):
-        stepper.rotate()
-        current_time = time.time()
-
-
-print('Rotation finished')
-
-
-    
+def task():
+    print("Hello")
+    master.after(1000,task)
     
 
+Label(master, text="Welcome to the Mouse Tracking System!").grid(row=0)
+Label(master, text="Enter the coefficients for:").grid(row=1)
+Label(master, text="Point1: ").grid(row=2)
+Label(master, text="Point2: ").grid(row=3)
+Label(master, text="Eq'n would be: 'c1*P1 + c2*P2' ").grid(row=4)
+
+e1 = Entry(master)
+e2 = Entry(master)
+
+e1.grid(row=2, column=1)
+e2.grid(row=3, column=1)
+
+Button(master, text='Quit', command=master.quit).grid(row=4, column=2, sticky=W, pady=2)
+Button(master, text='Enter', command=show_entry_fields).grid(row=4, column=1, sticky=W, pady=4)
+
+master.after(1000,task)
+master.mainloop()
 
