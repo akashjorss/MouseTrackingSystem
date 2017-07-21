@@ -8,7 +8,7 @@ class CW230:
     CWPin = 0 #direction pin, 1 and 0
     CPPin = 0#PWM pin, # of rising edges = no. of steps
     dir = 0
-    toggles = 0 ## 2 toggles per step
+    toggles = 0 ## 2 toggles per step, # of toggles
     current_state = 0 #current state of PWM CPPin
     delay = 0.0005 #delay between toggles, controls the speed
 
@@ -22,14 +22,15 @@ class CW230:
 
     def setSteps(self,steps):
         if steps > 0:
-            dir = 0
+            self.dir = 0
         else:
-            dir = 1
-        GPIO.output(self.CWPin,dir)
+            self.dir = 1
+        GPIO.output(self.CWPin,self.dir)
         self.toggles = 2*abs(steps)
 
     def toggle(self):
         '''basically takes half a step'''
+        
         if(self.toggles > 0):
             self.current_state = abs(self.current_state - 1)
             GPIO.output(self.CPPin,self.current_state)

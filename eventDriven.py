@@ -53,7 +53,8 @@ class ResponsiveWindow(pyglet.window.Window):
             y -= step
         if str(symbol) == '65363':
             y += step
-        sys.stdout.flush()        
+        sys.stdout.flush()
+ 
         xMotor.setSteps(x-previous_x)
         yMotor.setSteps(y-previous_y)
         previous_x = x
@@ -73,10 +74,7 @@ label = pyglet.text.Label('Welcome to Mouse Tracking System :)',
                           font_size=24,
                           x=window.width//2, y=window.height//2,
                           anchor_x='center', anchor_y='center')
-document = pyglet.text.document.FormattedDocument()
-layout = pyglet.text.layout.IncrementalTextLayout(document, window.width, window.height)
-caret = pyglet.text.caret.Caret(layout)
-window.push_handlers(caret)
+
 @window.event
 def on_draw():
     pass
